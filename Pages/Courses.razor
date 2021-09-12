@@ -1,0 +1,130 @@
+﻿@page "/courses"
+
+@using final.Data
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@inject final.IServices.ICourseService courseService
+@inject MudBlazor.ISnackbar SnackBar
+
+<AuthorizeView>
+    <Authorized>
+        <MudText Typo="Typo.h3">Courses</MudText>
+        <div>
+            <MudForm @bind-IsValid="@success">
+                <MudTextField @bind-Value="course.Name" Label="Course Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                              RequiredError="Course Name required!"></MudTextField>
+                <MudSelect @bind-Value="course.Ects" Label="ECTS" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                           RequiredError="ECTS field required!">
+                    <MudSelectItem Value="0"></MudSelectItem>
+                    <MudSelectItem Value="1"></MudSelectItem>
+                    <MudSelectItem Value="2"></MudSelectItem>
+                    <MudSelectItem Value="3"></MudSelectItem>
+                    <MudSelectItem Value="4"></MudSelectItem>
+                    <MudSelectItem Value="5"></MudSelectItem>
+                    <MudSelectItem Value="6"></MudSelectItem>
+                    <MudSelectItem Value="7"></MudSelectItem>
+                    <MudSelectItem Value="8"></MudSelectItem>
+                    <MudSelectItem Value="9"></MudSelectItem>
+                    <MudSelectItem Value="10"></MudSelectItem>
+                </MudSelect>
+                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
+            </MudForm>
+        </div>
+
+        <hr />
+
+        <MudTable Items="@GetCourses()" Dense="@dense" Hover="@hover" Filter="new Func<Course, bool>(FilterFunc)" @bind-student="course">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">Academic Courses</MudText>
+                <MudToolBarSpacer />
+                <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start"
+                              AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>Course Id</MudTh>
+                <MudTh>Course Name</MudTh>
+                <MudTh>ECTS</MudTh>
+                <MudTh>Action</MudTh>
+            </HeaderContent>
+            <RowTemplate Context="rowTemplateContext">
+                <MudTd DataLabel="Id">@rowTemplateContext.Id</MudTd>
+                <MudTd DataLabel="Course Name">@rowTemplateContext.Name</MudTd>
+                <MudTd DataLabel="ECTS">@rowTemplateContext.Ects</MudTd>
+                <MudTd DataLabel="">
+                    <MudFab @onclick="@(() => Edit(rowTemplateContext.Id))" Color="Color.Primary" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" />
+                    <MudFab @onclick="@(() => Delete(rowTemplateContext.Id))" Color="Color.Secondary" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small" />
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+        <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+        <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+        <MudText Inline="true">Selected: @course?.Name</MudText>
+    </Authorized>
+
+    <NotAuthorized>
+        <MudText Typo="Typo.h6">You are not authorized. Please Register or Log In to see the context of this page.</MudText>
+    </NotAuthorized>
+</AuthorizeView>
+
+
+
+@code {
+    private bool success;
+
+    private bool dense = false;
+    private bool hover = true;
+    private string searchString = "";
+
+    private Course course = new Course();
+    private List<Course> courses = new List<Course>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetCourses();
+    }
+
+    private List<Course> GetCourses()
+    {
+        courses = courseService.GetCourses();
+        return courses;
+    }
+
+    private bool FilterFunc(Course course)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+        {
+            return true;
+        }
+        if (course.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private void Save()
+    {
+        courseService.Save(course);
+        course = new Course();
+        SnackBar.Add("Course Saved", Severity.Success);
+        GetCourses();
+
+    }
+
+    private void Edit(int id)
+    {
+        course = courses.FirstOrDefault(s => s.Id == id);
+
+    }
+
+    private void Delete(int id)
+    {
+        courseService.Delete(id);
+        SnackBar.Add("Course Deleted", Severity.Warning);
+        GetCourses();
+    }
+
+}
