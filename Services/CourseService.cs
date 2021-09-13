@@ -38,13 +38,13 @@ namespace final.Services
             return _context.Courses.ToList();
         }
 
-        public void Save(Course course)
+        public bool Save(Course course)
         {
             int coursesOnDb = _context.Courses.Where(c => c.Name == course.Name).Count();
 
             if (coursesOnDb > 0)
             {
-                return;
+                return false;
             }
             if (course.Id == 0)
             {
@@ -55,6 +55,7 @@ namespace final.Services
                 _context.Courses.Update(course);
             }
             _context.SaveChanges();
+            return true;
         }
     }
 }

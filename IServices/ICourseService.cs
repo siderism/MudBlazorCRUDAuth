@@ -10,7 +10,7 @@ namespace final.IServices
     {
         List<Course> GetCourses();
         Course GetCourseById(int id);
-        void Save(Course course);
+        bool Save(Course course);
         string Delete(int id);
         }
 }

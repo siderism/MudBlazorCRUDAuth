@@ -18,7 +18,7 @@
                             <MudText Typo="Typo.h6">Add / Edit Course</MudText>
                         </CardHeaderContent>
                     </MudCardHeader>
-                    <MudCardContent>
+                    
                         <MudForm @bind-IsValid="@success">
                             <MudTextField @bind-Value="course.Name" Label="Course Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
                                           RequiredError="Course Name required!"></MudTextField>
@@ -40,7 +40,7 @@
                             </MudSelect>
                             <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
                         </MudForm>
-                    </MudCardContent>
+                    
                 </MudItem>
             </MudGrid>
         </MudCard>
@@ -120,9 +120,13 @@
 
     private void Save()
     {
-        courseService.Save(course);
+        bool dbUpdated = courseService.Save(course);
         course = new Course();
-        SnackBar.Add("Course Saved", Severity.Success);
+        if (dbUpdated)
+        {
+            SnackBar.Add("Course Saved", Severity.Success);
+        }
+
         GetCourses();
 
     }

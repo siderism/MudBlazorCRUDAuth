@@ -36,13 +36,13 @@ namespace final.Services
             return _context.Students.ToList();
         }
 
-        public void Save(Student student)
+        public bool Save(Student student)
         {
             int coursesOnDb = _context.Students.Where(s => s.Email == student.Email).Count();
 
             if (coursesOnDb > 0)
             {
-                return;
+                return false;
             }
             if (student.Id == 0)
             {
@@ -53,6 +53,7 @@ namespace final.Services
                 _context.Students.Update(student);
             }
             _context.SaveChanges();
+            return true;
         }
     }
 }

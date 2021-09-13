@@ -120,9 +120,13 @@
 
     private void Save()
     {
-        studentService.Save(student);
+        bool dbUpdated = studentService.Save(student);
         student = new Student();
-        SnackBar.Add("Student Saved", Severity.Success);
+        if (dbUpdated)
+        {
+            SnackBar.Add("Student Saved", Severity.Success);
+        }
+
         GetStudents();
     }
 

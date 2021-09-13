@@ -10,7 +10,7 @@ namespace final.IServices
     {
         List<Student> GetStudents();
         Student GetStudentById(int id);
-        void Save(Student student);
+        bool Save(Student student);
         string Delete(int id);
 
     }
