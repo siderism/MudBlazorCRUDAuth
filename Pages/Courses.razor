@@ -9,30 +9,41 @@
 <AuthorizeView>
     <Authorized>
         <MudText Typo="Typo.h3">Courses</MudText>
-        <div>
-            <MudForm @bind-IsValid="@success">
-                <MudTextField @bind-Value="course.Name" Label="Course Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
-                              RequiredError="Course Name required!"></MudTextField>
-                <MudSelect @bind-Value="course.Ects" Label="ECTS" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
-                           RequiredError="ECTS field required!">
-                    <ChildContent>
-                        <MudSelectItem Value="0"></MudSelectItem>
-                        <MudSelectItem Value="1"></MudSelectItem>
-                        <MudSelectItem Value="2"></MudSelectItem>
-                        <MudSelectItem Value="3"></MudSelectItem>
-                        <MudSelectItem Value="4"></MudSelectItem>
-                        <MudSelectItem Value="5"></MudSelectItem>
-                        <MudSelectItem Value="6"></MudSelectItem>
-                        <MudSelectItem Value="7"></MudSelectItem>
-                        <MudSelectItem Value="8"></MudSelectItem>
-                        <MudSelectItem Value="9"></MudSelectItem>
-                        <MudSelectItem Value="10"></MudSelectItem>
-                    </ChildContent>
-                </MudSelect>
-                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
-            </MudForm>
-        </div>
-
+        <br />
+        <MudCard Elevation="10">
+            <MudGrid>
+                <MudItem xs="4">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Add / Edit Course</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudForm @bind-IsValid="@success">
+                            <MudTextField @bind-Value="course.Name" Label="Course Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                                          RequiredError="Course Name required!"></MudTextField>
+                            <MudSelect @bind-Value="course.Ects" Label="ECTS" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                                       RequiredError="ECTS field required!">
+                                <ChildContent>
+                                    <MudSelectItem Value="0"></MudSelectItem>
+                                    <MudSelectItem Value="1"></MudSelectItem>
+                                    <MudSelectItem Value="2"></MudSelectItem>
+                                    <MudSelectItem Value="3"></MudSelectItem>
+                                    <MudSelectItem Value="4"></MudSelectItem>
+                                    <MudSelectItem Value="5"></MudSelectItem>
+                                    <MudSelectItem Value="6"></MudSelectItem>
+                                    <MudSelectItem Value="7"></MudSelectItem>
+                                    <MudSelectItem Value="8"></MudSelectItem>
+                                    <MudSelectItem Value="9"></MudSelectItem>
+                                    <MudSelectItem Value="10"></MudSelectItem>
+                                </ChildContent>
+                            </MudSelect>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
+                        </MudForm>
+                    </MudCardContent>
+                </MudItem>
+            </MudGrid>
+        </MudCard>
         <hr />
 
         <MudTable Items="@GetCourses()" Dense="@dense" Hover="@hover" Filter="new Func<Course, bool>(FilterFunc)" @bind-student="course">

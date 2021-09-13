@@ -9,20 +9,31 @@
 <AuthorizeView>
     <Authorized>
         <MudText Typo="Typo.h3">Students</MudText>
-
-        <div>
-            <MudForm @bind-IsValid="@success">
-                <MudTextField @bind-Value="student.FirstName" Label="First Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
-                              RequiredError="First Name required!"></MudTextField>
-                <MudTextField @bind-Value="student.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
-                              RequiredError="Last Name required!"></MudTextField>
-                <MudTextField @bind-Value="student.Email" Label="Email" Variant="Variant.Text" Margin="Margin.Dense" Required="true" InputType="InputType.Email"
-                              RequiredError="Email is required!" Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"></MudTextField>
-                <MudTextField @bind-Value="student.Address" Label="Address" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
-                <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
-            </MudForm>
-        </div>
-
+        <br />
+        <MudCard Elevation="10">
+            <MudGrid>
+                <MudItem xs="4">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText Typo="Typo.h6">Add / Edit Student</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudForm @bind-IsValid="@success">
+                            <MudTextField @bind-Value="student.FirstName" Label="First Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                                          RequiredError="First Name required!"></MudTextField>
+                            <MudTextField @bind-Value="student.LastName" Label="Last Name" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
+                                          RequiredError="Last Name required!"></MudTextField>
+                            <MudTextField @bind-Value="student.Email" Label="Email" Variant="Variant.Text" Margin="Margin.Dense" Required="true" InputType="InputType.Email"
+                                          RequiredError="Email is required!" Validation="@(new EmailAddressAttribute() {ErrorMessage = "The email address is invalid"})"></MudTextField>
+                            <MudTextField @bind-Value="student.Address" Label="Address" Variant="Variant.Text" Margin="Margin.Dense"></MudTextField>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
+                        </MudForm>
+                    </MudCardContent>
+                </MudItem>
+            </MudGrid>
+        </MudCard>
+        
         <hr />
 
         <MudTable Items="@GetStudents()" Dense="@dense" Hover="@hover" Filter="new Func<Student, bool>(FilterFunc)" @bind-student="student">
@@ -97,6 +108,10 @@
             return true;
         }
         if (student.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+        if (student.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase))
         {
             return true;
         }
