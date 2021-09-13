@@ -15,17 +15,19 @@
                               RequiredError="Course Name required!"></MudTextField>
                 <MudSelect @bind-Value="course.Ects" Label="ECTS" Variant="Variant.Text" Margin="Margin.Dense" Required="true"
                            RequiredError="ECTS field required!">
-                    <MudSelectItem Value="0"></MudSelectItem>
-                    <MudSelectItem Value="1"></MudSelectItem>
-                    <MudSelectItem Value="2"></MudSelectItem>
-                    <MudSelectItem Value="3"></MudSelectItem>
-                    <MudSelectItem Value="4"></MudSelectItem>
-                    <MudSelectItem Value="5"></MudSelectItem>
-                    <MudSelectItem Value="6"></MudSelectItem>
-                    <MudSelectItem Value="7"></MudSelectItem>
-                    <MudSelectItem Value="8"></MudSelectItem>
-                    <MudSelectItem Value="9"></MudSelectItem>
-                    <MudSelectItem Value="10"></MudSelectItem>
+                    <ChildContent>
+                        <MudSelectItem Value="0"></MudSelectItem>
+                        <MudSelectItem Value="1"></MudSelectItem>
+                        <MudSelectItem Value="2"></MudSelectItem>
+                        <MudSelectItem Value="3"></MudSelectItem>
+                        <MudSelectItem Value="4"></MudSelectItem>
+                        <MudSelectItem Value="5"></MudSelectItem>
+                        <MudSelectItem Value="6"></MudSelectItem>
+                        <MudSelectItem Value="7"></MudSelectItem>
+                        <MudSelectItem Value="8"></MudSelectItem>
+                        <MudSelectItem Value="9"></MudSelectItem>
+                        <MudSelectItem Value="10"></MudSelectItem>
+                    </ChildContent>
                 </MudSelect>
                 <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="Save" Disabled="@(!success)">Save</MudButton>
             </MudForm>
@@ -42,8 +44,8 @@
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Course Id</MudTh>
-                <MudTh>Course Name</MudTh>
-                <MudTh>ECTS</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Course, object>(x => x.Name)" InitialDirection="SortDirection.Ascending">Course Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Course, object>(x => x.Ects)" InitialDirection="SortDirection.Descending">ECTS</MudTableSortLabel></MudTh>
                 <MudTh>Action</MudTh>
             </HeaderContent>
             <RowTemplate Context="rowTemplateContext">

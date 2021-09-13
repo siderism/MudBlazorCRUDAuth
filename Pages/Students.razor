@@ -34,9 +34,9 @@
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>Student Id</MudTh>
-                <MudTh>First Name</MudTh>
-                <MudTh>Last Name</MudTh>
-                <MudTh>Email</MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Student, object>(x => x.FirstName)" InitialDirection="SortDirection.Ascending">First Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Student, object>(x => x.LastName)" InitialDirection="SortDirection.Ascending">Last Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<Student, object>(x => x.Email)" InitialDirection="SortDirection.Ascending">E-mail</MudTableSortLabel></MudTh>
                 <MudTh>Address</MudTh>
                 <MudTh>Action</MudTh>
             </HeaderContent>
