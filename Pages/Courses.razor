@@ -126,6 +126,10 @@
         {
             SnackBar.Add("Course Saved", Severity.Success);
         }
+        else
+        {
+            SnackBar.Add("A Course with this name already exists", Severity.Error);
+        }
 
         GetCourses();
 

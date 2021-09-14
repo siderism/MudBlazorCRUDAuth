@@ -126,6 +126,10 @@
         {
             SnackBar.Add("Student Saved", Severity.Success);
         }
+        else
+        {
+            SnackBar.Add("A Student with this e-mail already exists", Severity.Error);
+        }
 
         GetStudents();
     }
